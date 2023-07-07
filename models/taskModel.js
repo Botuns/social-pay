@@ -22,20 +22,30 @@ const TaskSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }],
+  screenshots: [{
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    },
+    screenshot: {
+      type: String,
+      required: true
+    }
+  }],
   progress: {
     type: Number,
     default: 0
   },
-  price:{
-    type: Number,
-    required: true,
-  },
+  
   isCompleted: {
     type: Boolean,
     default: false
-  }
+  },
+},
+{ timestamps: true }
   // Other fields specific to the task model
-});
+);
 
 const Task = mongoose.model('Task', TaskSchema);
 

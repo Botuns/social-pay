@@ -1,10 +1,16 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
+//note: users have package they belong to,
+
 const UserSchema = new mongoose.Schema({
-  name: {
+  fullName: {
     type: String,
     required: true
+  },
+  username: {
+    type: String,
+    unique: true,
   },
   email: {
     type: String,
@@ -21,14 +27,29 @@ const UserSchema = new mongoose.Schema({
   },
   tasks: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Task'
+    ref: 'Task',
+    nullable: true
   }],
+  level: {
+    type: String,
+    enum: ['free','level1', 'level2', 'level3', 'level4', 'level5'],
+    default: 'free',
+    required: true
+
+  },
+  //states
+  location: {
+    type: String,
+    required: true
+  },
   roles: {
     type: String,
     enum: ['user', 'admin'],
     default: 'user'
   }
-});
+},
+  { timestamps: true }
+);
 
 // Hash the password before saving to the database
 UserSchema.pre('save', async function(next) {

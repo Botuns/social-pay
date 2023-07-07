@@ -22,13 +22,18 @@ const AdvertSchema = new mongoose.Schema({
     type: Boolean,
     default: false
     },
+    location:{
+    type: String,
+    required: true
+    },
   creator: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    required: true
   },
   // Other fields specific to your advert model
 });
 
-const Advert = mongoose.model('Task', AdvertSchema);
+const Advert = mongoose.model('Advert', AdvertSchema);
 
 module.exports = Advert;
