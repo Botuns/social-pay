@@ -10,6 +10,10 @@ const AdvertSchema = new mongoose.Schema({
     enum: ['Facebook', 'Twitter', 'Instagram', 'Threads', 'YouTube', 'TikTok', 'WebsiteUrl', 'AppDownload', 'Telegram', 'Audiomack'],
     required: true
   },
+  linktoPromote:{
+    type:String,
+    required:true
+  },
   description: {
     type: String,
     required: true
@@ -17,6 +21,18 @@ const AdvertSchema = new mongoose.Schema({
     price:{
     type: Number,
     required: true,
+    },
+    religion:{
+      type:String,
+      enum:['all','islam','christainity','traditional','others'],
+      default:'all',
+      required:true
+    },
+    adStatus:{
+    type:String,
+    enum:['pending','approved','rejected'],
+    default:'pending'
+
     },
     isApproved: {
     type: Boolean,

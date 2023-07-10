@@ -10,9 +10,13 @@ const TransactionSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  refNo:{
+    type:Number,
+    required:true
+  },
   type: {
     type: String,
-    enum: ['credit', 'debit'],
+    enum: ['credit', 'debit','wallet'],
     required: true
   },
   description: {
