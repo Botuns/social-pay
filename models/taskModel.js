@@ -9,6 +9,10 @@ const TaskSchema = new mongoose.Schema({
     type:String,
     required:true
   },
+  location:{
+    type: String,
+    required:true
+  },
   type:{
     type:String,
     required:true

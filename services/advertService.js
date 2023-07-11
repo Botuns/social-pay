@@ -21,8 +21,9 @@ exports.CreateAdvert = async(data,userId)=>{
     if(data ||isUser){
         try {
             const newAdvert = await new Advert({
-                title,advertType,linktoPromote,description,price,adStatus,location,creator,
+                title,advertType,linktoPromote,description,price,adstatus,location,creator,
             })
+            await newAdvert.save()
 
             return{
                 message:"sucessfully created an advert",
@@ -45,9 +46,9 @@ exports.CreateAdvert = async(data,userId)=>{
 
 //approve advert
 
-exports.approveAdvert()= async(advertId) =>{
+exports.approveAdvert = async(advertId) =>{
 
-    const id = ObjectId(advertId)
+    const id = advertId
     if(advertId){
         try {
             const isExistAdvert = await Advert.findById(id)
@@ -60,12 +61,14 @@ exports.approveAdvert()= async(advertId) =>{
                 const advert= isExistAdvert._id
                 const linktask= isExistAdvert.linktoPromote
                 const religion= isExistAdvert.religion
-                const type = isExistAdvert.type
+                const type = isExistAdvert.advertType
+                const location = isExistAdvert.location
 
                 // automatically creates task
                 const newTask= await new Task({
-                    title,linktask,type,religion,description,advert
+                    title,linktask,location,type,religion,description,advert
                 })
+                await newTask.save();
                 return({
                     message: 'Advert approved and created as task for other users',
                     updatedAdvertData:updatedAdvert,
