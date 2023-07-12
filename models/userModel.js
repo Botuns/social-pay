@@ -21,6 +21,12 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  religion:{
+    type:String,
+      enum:['all','islam','christainity','traditional','others'],
+      default:'all',
+      required:true
+  },
   wallet: {
     type: Number,
     default: 0

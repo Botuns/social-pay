@@ -8,7 +8,7 @@ const {generateToken} = require('../configs/jwtToken')
 exports.createUser = async (userData) => {
     if(!userData) throw new Error('No user data'); //check if user data is not null
     //check if user exists
-    const {fullName, username, email,password,location } = userData;
+    const {fullName, username, email,password,location,religion } = userData;
     const usernameExists = await User.findOne({username}); 
     const isUser = await User.findOne({email});
     if(!isUser || !usernameExists){ 
@@ -17,6 +17,7 @@ exports.createUser = async (userData) => {
                 fullName,
                 username,
                 password,
+                religion,
                 email,
                 location
 

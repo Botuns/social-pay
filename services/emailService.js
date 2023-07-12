@@ -2,13 +2,7 @@ const nodemailer = require("nodemailer");
 const fs = require('fs');
 
 //create a transporter
-
-
-
-//sendWelcomeEmail
-exports.sendWelcomeEmail = async (email,fullname) => {
-    try {
-        // Create a transporter using SMTP
+//  Create a transporter using SMTP
         const transporter = nodemailer.createTransport({
             host:process.env.MAIL_HOST ,
             port: 465,
@@ -22,6 +16,14 @@ exports.sendWelcomeEmail = async (email,fullname) => {
               rejectUnauthorized: false,
             },
           });
+
+// send mail on advert approval
+// send mail on advert rejection
+
+//sendWelcomeEmail
+exports.sendWelcomeEmail = async (email,fullname) => {
+    try {
+        
         // Read the HTML template file
         const template = fs.readFileSync('C:\\Users\\TOSHIBA\\Desktop\\social_pay\\utils\\mails_templates\\signup_mail_template.html', 'utf-8');
     
@@ -32,7 +34,7 @@ exports.sendWelcomeEmail = async (email,fullname) => {
         await transporter.sendMail({
           from: process.env.MAIL_USER,
           to: email,
-          subject: 'Welcome to Social Pay',
+          subject: 'You are now a step closer to earning',
           html: html,
         });
           return("Welcome mail sent sucessfully")
@@ -43,3 +45,30 @@ exports.sendWelcomeEmail = async (email,fullname) => {
   
 };
 
+
+// send mail on approval of task
+
+exports.sendMailOnAdvertApproval = async()=>{
+
+  try {
+        
+    // Read the HTML template file
+    const template = fs.readFileSync('C:\\Users\\TOSHIBA\\Desktop\\social_pay\\utils\\mails_templates\\signup_mail_template.html', 'utf-8');
+
+    // Replace the placeholder with the user's full name in the template
+    const html = template.replace('{{fullname}}', fullname);    
+    // Send the welcome email
+
+    await transporter.sendMail({
+      from: process.env.MAIL_USER,
+      to: email,
+      subject: 'Voila! your advert is  Approved',
+      html: html,
+    });
+      return("Approval mail sent sucessfully")
+
+  } catch (error) {
+    throw new Error(`Error sending approval email: ${error}`);
+  }
+
+}

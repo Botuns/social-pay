@@ -1,17 +1,21 @@
 const mongoose = require('mongoose');
 
 const TransactionSchema = new mongoose.Schema({
-  user: {
+  userRef: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
+  },
+  purpose:{
+    type:String,
+    enum:['airtime','data','dstv','ibedc']
   },
   amount: {
     type: Number,
     required: true
   },
   refNo:{
-    type:Number,
+    type:String,
     required:true
   },
   type: {
@@ -24,7 +28,7 @@ const TransactionSchema = new mongoose.Schema({
     required: true
   },
   createdAt: {
-    type: Date,
+    type: String,
     default: Date.now
   }
 });

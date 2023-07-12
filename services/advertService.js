@@ -8,6 +8,7 @@ const { ObjectId } = require('mongodb');
 //approve advert
 //get all unapproved adverts
 //get all approved adverts
+// reject advert
 
 //create advert
 
