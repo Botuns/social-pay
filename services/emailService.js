@@ -48,15 +48,15 @@ exports.sendWelcomeEmail = async (email,fullname) => {
 
 // send mail on approval of task
 
-exports.sendMailOnAdvertApproval = async()=>{
+exports.sendMailOnAdvertApproval = async(fullname,advertTitle,email)=>{
 
   try {
         
     // Read the HTML template file
-    const template = fs.readFileSync('C:\\Users\\TOSHIBA\\Desktop\\social_pay\\utils\\mails_templates\\signup_mail_template.html', 'utf-8');
+    const template = fs.readFileSync('C:\\Users\\TOSHIBA\\Desktop\\social_pay\\utils\\mails_templates\\approvedAdvert_template.html', 'utf-8');
 
     // Replace the placeholder with the user's full name in the template
-    const html = template.replace('{{fullname}}', fullname);    
+    const html = template.replace('{{fullname}}','{{advertTitle}}', fullname,advertTitle);    
     // Send the welcome email
 
     await transporter.sendMail({

@@ -3,6 +3,7 @@ const User = require('../models/userModel')
 const Task = require('../models/taskModel')
 const validateMongoDbId = require('../utils/validateMongoDbId')
 const { ObjectId } = require('mongodb');
+const {sendMailOnAdvertApproval} = require('../services/emailService')
 
 //create advert
 //approve advert
@@ -47,12 +48,16 @@ exports.CreateAdvert = async(data,userId)=>{
 
 //approve advert
 
-exports.approveAdvert = async(advertId) =>{
+exports.approveAdvert = async(advertId,assignedUsersNo) =>{
 
     const id = advertId
     if(advertId){
         try {
             const isExistAdvert = await Advert.findById(id)
+            // get details to send mail
+            const userId = isExistAdvert.creator
+            const user= User.findById({userId})
+            validateMongoDbId(userId)
             if(isExistAdvert){
                 isExistAdvert.adStatus='approved';
                 isExistAdvert.isApproved= true;
@@ -66,10 +71,12 @@ exports.approveAdvert = async(advertId) =>{
                 const location = isExistAdvert.location
 
                 // automatically creates task
-                const newTask= await new Task({
+                const newTask= new Task({
                     title,linktask,location,type,religion,description,advert
                 })
                 await newTask.save();
+                //send mail notice
+                await sendMailOnAdvertApproval(user.fullName,isExistAdvert.title,user.email,)
                 return({
                     message: 'Advert approved and created as task for other users',
                     updatedAdvertData:updatedAdvert,

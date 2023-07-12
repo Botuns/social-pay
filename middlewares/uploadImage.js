@@ -23,10 +23,10 @@ const multerFilter = (req, file, cb) => {
 const uploadPhoto = multer({
   storage: storage,
   fileFilter: multerFilter,
-  limits: { fileSize: 1000000 },
+  limits: { fileSize: 2000000 },
 });
 
-const productImgResize = async (req, res, next) => {
+const screenShotImgResize = async (req, res, next) => {
   if (!req.files) return next();
   await Promise.all(
     req.files.map(async (file) => {
@@ -34,8 +34,8 @@ const productImgResize = async (req, res, next) => {
         .resize(300, 300)
         .toFormat("jpeg")
         .jpeg({ quality: 90 })
-        .toFile(`public/images/products/${file.filename}`);
-      fs.unlinkSync(`public/images/products/${file.filename}`);
+        .toFile(`public/images/screenshots/${file.filename}`);
+      fs.unlinkSync(`public/images/screenshots/${file.filename}`);
     })
   );
   next();
@@ -55,4 +55,4 @@ const blogImgResize = async (req, res, next) => {
   );
   next();
 };
-module.exports = { uploadPhoto, productImgResize, blogImgResize };
+module.exports = { uploadPhoto, productImgResize: screenShotImgResize, blogImgResize };

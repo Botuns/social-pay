@@ -17,6 +17,15 @@ const TaskSchema = new mongoose.Schema({
     type:String,
     required:true
   },
+  amountForUser:{
+    type:Number,
+    default:0
+  },
+  assignedUsers:{
+    type:String,
+    require:true
+
+  },
   religion:{
     type:String,
     required:true
