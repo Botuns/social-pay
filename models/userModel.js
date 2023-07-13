@@ -27,7 +27,11 @@ const UserSchema = new mongoose.Schema({
       default:'all',
       required:true
   },
-  wallet: {
+  earningsWallet: {
+    type: Number,
+    default: 0
+  },
+  acctWallet: {
     type: Number,
     default: 0
   },

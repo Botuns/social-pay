@@ -12,9 +12,7 @@ const AIRTIME_URL = 'https://billing-staging.bytestacks.io/api/v1/vend_data'
 // buy other utilities
 // withdraw
 
-axios(options)
-  .then(response => console.log(response.data))
-  .catch(error => console.error(error));
+
 
 
 
@@ -26,7 +24,7 @@ exports.buyAirtimeFromUserWallet = async(airtimePayload,userId)=>{
     try {
         const user = await User.findById(userId);
         if(user){
-            const balance = user.wallet
+            const balance = user.acctWallet
             // check if amount is enough
             if(balance>amount &&balance > 100){
                 try {
@@ -44,7 +42,7 @@ exports.buyAirtimeFromUserWallet = async(airtimePayload,userId)=>{
                     // checks if succeed
                     if(response){
                         if(response.data.success===true){
-                            balance -=amount
+                            user.acctWallet -=amount
                             await user.save() //updates the balance
                             const userRef = user._id
                             const purpose = 'airtime'
