@@ -6,9 +6,14 @@ const TransactionSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
+  status:{
+    type:String,
+    enum:['pending','verified','failed','rejected'],
+    default:'pending'
+  },
   purpose:{
     type:String,
-    enum:['airtime','data','dstv','ibedc']
+    enum:['airtime','data','dstv','ibedc','fundwallet']
   },
   amount: {
     type: Number,

@@ -1,5 +1,7 @@
 const axios = require('axios');
 const https = require('https');
+const { ObjectId } = require('mongodb');
+const User = require('../models/userModel');
 
 class PaymentService {
   initializepaystack(email, amount) {
@@ -45,7 +47,13 @@ class PaymentService {
     });
   }
 
-  async fundacctWallet(email, amount) {
+  async fundacctWallet(email, amount,userId) {
+    const id = new ObjectId(userId);
+    const user = User.findById(id);
+    if(!user){
+      throw new Error('User not found');
+    }
+
     try {
       const result = await this.initializepaystack(email, amount);
       return {
@@ -55,6 +63,10 @@ class PaymentService {
     } catch (error) {
       throw new Error(error);
     }
+  }
+
+  async AddMoneytoAcctWallet(userId){
+    
   }
 }
 
