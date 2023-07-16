@@ -12,9 +12,7 @@ const transactionService = new TransactionService()
             const{email,amount}=req.body
             const result = await paymentService.fundacctWallet(email,amount)
             const authorizationUrl = result.result.data.data.authorization_url;
-            res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');
-            res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-            res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+            
             return res.redirect(authorizationUrl);
 
             
@@ -38,7 +36,7 @@ const transactionService = new TransactionService()
                 }
               }
               
-              const request =  https.request(options, rest => {
+              const request =   https.request(options, rest => {
                 let data = ''
               
                 rest.on('data', (chunk) => {
@@ -48,9 +46,12 @@ const transactionService = new TransactionService()
                 rest.on('end', () => {
                   console.log(JSON.parse(data))
                   if(data.status="success"){
-                    transactionService.updateTransactionToSuccess(reference)
+                   transactionService.updateTransactionToSuccess(reference)
                   }
-                  res.status(200).json(JSON.parse(data))
+                  res.status(200).json({
+                    message:'If transaction is already sucessful, it automatically updates the user wallet',
+                    data:data
+                  })
                 })
               }).on('error', error => {
                 console.error(error)

@@ -10,12 +10,7 @@ const paymentRoutes= require('./routes/paymentRoutes')
 app.use(express.json()); //Returns middleware that only parses json and only looks at requests where the Content-Type header matches the type option.
 const PORT = process.env.PORT || 4000; //port number
 dbConnect(); //connects to the database
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type'); // Add this line
 
-    next();
-});
 app.use('/api',authRoutes); //routes to the authRoutes
 app.use('/api',advertRoutes); //routes to the advertRoutes
 app.use('/api',paymentRoutes)

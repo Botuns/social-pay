@@ -18,7 +18,7 @@ const AIRTIME_URL = 'https://billing-staging.bytestacks.io/api/v1/vend_data'
 
 //buy airtime from wallet after some validations have been made from thee front-end
 
-exports.buyAirtimeFromUserWallet = async(airtimePayload,userId)=>{
+exports.buyAirtimeFromAcctWallet = async(airtimePayload,userId)=>{
     // gets the details needed
     const {amount,phone_no,telco,data_code} = airtimePayload
     try {
@@ -56,7 +56,7 @@ exports.buyAirtimeFromUserWallet = async(airtimePayload,userId)=>{
                                 userRef,
                                 purpose,
                                 amount,
-                                refNo,
+                                refNo, //used a random refNo
                                 type,
                                 description,
                                 createdAt
@@ -68,7 +68,7 @@ exports.buyAirtimeFromUserWallet = async(airtimePayload,userId)=>{
                                 message: 'airtime purchase was sucessfull',
                                 data:{
                                     newTransaction,
-                                    new_balance:user.wallet
+                                    new_balance:user.acctWallet
                                 },
                                 status:'success'
                             })
