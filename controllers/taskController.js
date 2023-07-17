@@ -8,6 +8,9 @@ class TaskController {
       const { taskId } = req.params;
       const { userId } = req.body;
       const screenshot = req.file.path; //  using multer for file upload
+      if(!screenshot){
+        res.status(400).json('a validation error occured')
+      }
       
       const uploadedScreenshot = await taskService.uploadScreenshot(
         taskId,
@@ -17,7 +20,10 @@ class TaskController {
       
       res.json({ message: 'Screenshot uploaded successfully', screenshot: uploadedScreenshot });
     } catch (error) {
-      next(error);
+      // next(error);
+      // throw new Error(error)
+      res.status(401).json(error.message)
+
     }
   }
 

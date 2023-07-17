@@ -1,26 +1,47 @@
 const axios = require('axios');
 
+const API_KEY = 'CNQZRPSZXHGUKH391HHGLBCXQ0VODCK';
+const MERCHANT_ID = 'botuns';
 
-//
-// buy airtime here:
-//
-const options = {
-  method: 'POST',
-  url: 'https://billing-service.bytestacks.io/api/v1/vend_airtime',
-  headers: {
-    accept: 'application/json',
-    'content-type': 'application/json',
-    'api-key': ''
-  },
-    data: {amount: '100', phone_no: '09134516158', telco: 'mtn', reference: '2134567890-'}
+const requestBody = {
+  provider: 'MTN',
+  number: '09134516158',
+  amount: '100',
+  reference: 'GBR_2459392959593939',
 };
 
-axios
-  .request(options)
-  .then(function (response) {
-    console.log(response.data);
+axios.post(
+  'https://sandbox.giftbills.com/api/v1/airtime/topup', // Replace with the actual API endpoint
+  requestBody,
+  {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      MerchantId: MERCHANT_ID,
+      'Content-Type': 'application/json',
+    },
+  }
+)
+  .then(response => {
+    console.log('Response:', response.data);
   })
-  .catch(function (error) {
-    console.error(error);
+  .catch(error => {
+    console.error('Error:', error.message);
   });
-  //end
+
+
+//   const username = 'botuns';
+// const password = '79wkayNQ4R9Xuyp';
+
+// axios.get('https://giftbills.com/api/v1/check-balance', {
+//   params: {
+//     username: username,
+//     password: password,
+//   }
+// })
+//   .then(response => {
+//     console.log('Response:', response.data);
+//   })
+//   .catch(error => {
+//     console.error('Error:', error.message);
+//   });
+// // In this code snippet, we're making a GET request to the URL 'https://giftbills.com/api/check-balance' with the parameters username and password. The params property in the Axios configuration allows you to pass the parameters as an object. The username and password values 

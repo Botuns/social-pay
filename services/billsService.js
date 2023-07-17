@@ -20,7 +20,7 @@ const AIRTIME_URL = 'https://billing-staging.bytestacks.io/api/v1/vend_data'
 
 exports.buyAirtimeFromAcctWallet = async(airtimePayload,userId)=>{
     // gets the details needed
-    const {amount,phone_no,telco,data_code} = airtimePayload
+    const {amount,phone_no,telco,reference} = airtimePayload
     try {
         const user = await User.findById(userId);
         if(user){
@@ -34,9 +34,10 @@ exports.buyAirtimeFromAcctWallet = async(airtimePayload,userId)=>{
                         headers: {
                           accept: 'application/json',
                           'content-type': 'application/json',
+                          'secret-key': 'xtLDrozs7GvTvysvCWpsIRZHQj1FBFnZ',
                           'api-key': process.env.FINCRA_KEY
                         },
-                        data: JSON.stringify(amount, phone_no, telco, data_code)
+                        data: JSON.stringify(amount, phone_no, telco, reference)
                       };
                     const response = await axios(options);
                     // checks if succeed

@@ -18,6 +18,10 @@ const AdvertSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  assignedUsers:{
+    type: Number,
+    required: true,
+    },
     price:{
     type: Number,
     required: true,

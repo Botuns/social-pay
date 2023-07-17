@@ -2,7 +2,6 @@ const axios = require('axios')
 const https = require('https')
 const PaymentService = require('../services/paymentService')
 const TransactionService = require('../services/transactionService')
-const { response } = require('express')
 const paymentService = new PaymentService()
 const transactionService = new TransactionService()
 
