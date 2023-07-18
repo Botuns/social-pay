@@ -1,6 +1,7 @@
 const User = require('../models/userModel');
-const {sendWelcomeEmail} = require('../services/emailService');
+const {sendWelcomeEmail,sendMailOnOtp} = require('../services/emailService');
 const {generateToken} = require('../configs/jwtToken')
+const{generateOTP} = require('../utils/otp')
 
 // Create a new user
 
@@ -11,12 +12,14 @@ exports.createUser = async (userData) => {
     const {fullName, username, email,password,location,religion } = userData;
     const usernameExists = await User.findOne({username}); 
     const isUser = await User.findOne({email});
+    const otp= generateOTP()
     if(!isUser || !usernameExists){ 
         try {
             const user = new User({
                 fullName,
                 username,
                 password,
+                otp,
                 religion,
                 email,
                 location
@@ -24,8 +27,8 @@ exports.createUser = async (userData) => {
     
             });
             const newUser =  await user.save();
-            //send welcome email
-            await sendWelcomeEmail(email,fullName);
+            //send otp email
+            await sendMailOnOtp(email,otp);
             return {
                 message: 'User created successfully',
                 data: newUser,
@@ -41,6 +44,38 @@ exports.createUser = async (userData) => {
 
     
 }
+
+// verify
+
+exports.verifyUser = async (email, otp) => {
+    try {
+      const user = await User.findOne({ email });
+      if (!user) {
+        throw new Error('User not found');
+      }
+  
+      if (user.otp === otp) {
+        // OTP matches, create the user and send welcome email
+        user.isVerified = true;
+        await user.save();
+        const fullName =user.fullName
+  
+        await sendWelcomeEmail(email, fullName);
+  
+        return {
+          message: 'User verified and created successfully',
+          data: user,
+          token: generateToken(user._id),
+          status: 'success',
+        };
+      } else {
+        throw new Error('Invalid OTP');
+      }
+    } catch (error) {
+      throw new Error(error.message || 'An error occurred while verifying the user');
+    }
+  };
+  
 
 // login service
 exports.loginUser = async(userData)=>{

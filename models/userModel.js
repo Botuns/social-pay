@@ -21,6 +21,9 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  otp: {
+    type: String,
+  },
   religion:{
     type:String,
       enum:['all','islam','christainity','traditional','others'],
@@ -51,6 +54,10 @@ const UserSchema = new mongoose.Schema({
   location: {
     type: String,
     required: true
+  },
+  isVerified: {
+    type: Boolean,
+    default: false
   },
   roles: {
     type: String,

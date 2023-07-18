@@ -72,3 +72,31 @@ exports.sendMailOnAdvertApproval = async(fullname,advertTitle,email)=>{
   }
 
 }
+
+// send mail (otp) -email verification
+
+exports.sendMailOnOtp = async(email,otp)=>{
+
+  try {
+        
+    // Read the HTML template file
+    const template = fs.readFileSync('C:\\Users\\TOSHIBA\\Desktop\\social_pay\\utils\\mails_templates\\otp_template.html', 'utf-8');
+
+    // Replace the placeholder with the user's full name in the template
+    const html = template.replace('{{otp}}', otp);    
+    // Send the welcome email
+
+    await transporter.sendMail({
+      from: process.env.MAIL_USER,
+      to: email,
+      subject: 'Ileoja Pay - OTP Verification',
+      html: html,
+    });
+      return("Approval mail sent sucessfully")
+
+  } catch (error) {
+    throw new Error(`Error sending otp email: ${error}`);
+  }
+
+}
+

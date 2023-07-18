@@ -21,4 +21,17 @@ const loginUser= async (req,res) =>{
 
     }
 }
-module.exports = {createUser,loginUser}
+
+// verify user
+
+const verifyUser= async (req,res) =>{
+    const {email,otp}= req.body;
+    try{
+        const result = await userService.verifyUser(email,otp);
+        res.status(203).json(result);
+    } catch (error){
+        res.status(400).json({message:error.message})
+
+    }
+}
+module.exports = {createUser,loginUser,verifyUser}
