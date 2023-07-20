@@ -1,7 +1,7 @@
 const axios = require('axios');
 
-const API_KEY = 'CNQZRPSZXHGUKH391HHGLBCXQ0VODCK';
-const MERCHANT_ID = 'botuns';
+const API_KEY = 'EGGL1EUBOQXMVQKFZDUGUUAKNVIWUGL';
+const MERCHANT_ID = 'bot';
 
 const requestBody = {
   provider: 'MTN',

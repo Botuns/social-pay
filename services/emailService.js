@@ -100,3 +100,30 @@ exports.sendMailOnOtp = async(email,otp)=>{
 
 }
 
+// Function to send airtime purchase confirmation email
+exports.sendAirtimePurchaseConfirmation = async (email, transactionDetails) => {
+  try {
+    // Read the HTML template file
+    const template = fs.readFileSync('C:\\Users\\TOSHIBA\\Desktop\\social_pay\\utils\\mails_templates\\airtime_purchase.html', 'utf-8');
+
+    // Replace the placeholders in the template with transaction details
+    let html = template.replace('[TRANSACTION_ID]', transactionDetails.transactionId);
+    html = html.replace('[AMOUNT]', transactionDetails.amount);
+    html = html.replace('[PHONE_NUMBER]', transactionDetails.phoneNumber);
+    html = html.replace('[PROVIDER]', transactionDetails.provider);
+    html = html.replace('[REFERENCE_NUMBER]', transactionDetails.referenceNumber);
+    // html = html.replace('[DESCRIPTION]', transactionDetails.description);
+
+    // Send the email
+    await transporter.sendMail({
+      from: process.env.MAIL_USER,
+      to: email,
+      subject: 'Ileoja Pay - Airtime Purchase Confirmation',
+      html: html,
+    });
+
+    return "Airtime purchase confirmation email sent successfully.";
+  } catch (error) {
+    throw new Error(`Error sending airtime purchase confirmation email: ${error}`);
+  }
+};

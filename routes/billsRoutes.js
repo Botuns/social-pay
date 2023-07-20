@@ -1,6 +1,6 @@
 const router = require('express').Router()
-const billsService = require('../services/billsService')
+const billsController = require('../controllers/billsController')
 
-router.post('/utilities/airtime/acctwallet',billsService.buyAirtimeFromAcctWallet)
+router.post('/utilities/airtime/acctwallet',billsController.buyAirtimeFromAcctWallet)
 
 module.exports= router

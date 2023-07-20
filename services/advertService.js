@@ -73,8 +73,11 @@ exports.approveAdvert = async(advertId) =>{
                 const religion= isExistAdvert.religion
                 const type = isExistAdvert.advertType
                 const location = isExistAdvert.location
-                const amountForUser = 0  //to be calculated
-                const assignedUsers = isExistAdvert.assignedUsers
+                // **  calculate the assigned users and price to be earned for users  **  //
+                const percent = isExistAdvert.assignedUsers * 0.01
+                const earn_commision = isExistAdvert.price/(isExistAdvert.price * 0.2)
+                const amountForUser = earn_commision  //to be calculated
+                const assignedUsers = isExistAdvert.assignedUsers + percent
 
                 // automatically creates task
                 const newTask= new Task({
