@@ -38,7 +38,7 @@ class TaskController {
   async approveScreenshot(req, res, next) {
     try {
       const { taskId, screenshotId } = req.params;
-      const { userId } = req.body;
+      const { userId } = req?.user?.id;
       const task = await taskService.approveScreenshot(taskId, screenshotId, userId);
 
       res.json({ message: 'Screenshot approved successfully', task });
@@ -49,7 +49,7 @@ class TaskController {
 
   async getTasksMadeByUsers(req, res, next) {
     try {
-      const { userId } = req.body;
+      const { userId } = req?.user?.id;
       const tasks = await taskService.getTasksMadeByUsers(userId);
 
       res.json({ tasks });
@@ -70,7 +70,7 @@ class TaskController {
 
   async getAllCompletedTasksByUsers(req, res, next) {
     try {
-      const { userId } = req.body;
+      const { userId } = req?.user?.id;
       const tasks = await taskService.getAllCompletedTasksByUsers(userId);
 
       res.json({ tasks });
@@ -93,7 +93,7 @@ class TaskController {
   async markTaskAsCompleted(req, res, next) {
     try {
       const { taskId } = req.params;
-      const { userId } = req.body;
+      const { userId } = req?.user?.id;
       const result = await taskService.markTaskAsCompleted(taskId, userId);
 
       res.json(result);

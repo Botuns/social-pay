@@ -6,7 +6,8 @@ class TransactionController {
   }
 
   createNewTransaction = async (req, res) => {
-    const { transactionData, userId } = req.body;
+    const { transactionData } = req.body;
+    const{userId}= req?.user?.id
     try {
       const result = await this.transactionService.createNewTransaction(
         transactionData,
